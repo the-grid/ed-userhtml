@@ -1,0 +1,35 @@
+{
+  "name": "@the-grid/ed-userhtml",
+  "version": "1.0.0",
+  "description": "Ed widget for user html",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo 'todo'",
+    "build": "mkdir -p dist && npm run buildindex && npm run buildedit",
+    "buildindex": "browserify ./src/index.js | uglifyjs -cm > ./dist/index.js",
+    "buildedit": "browserify ./src/edit.js | uglifyjs -cm > ./dist/edit.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/the-grid/ed-userhtml.git"
+  },
+  "keywords": [
+    "ed",
+    "widget"
+  ],
+  "author": "The Grid",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/the-grid/ed-userhtml/issues"
+  },
+  "homepage": "https://github.com/the-grid/ed-userhtml#readme",
+  "dependencies": {
+    "pako": "^1.0.3",
+    "querystring": "^0.2.0",
+    "urlsafe-base64": "^1.0.0"
+  },
+  "devDependencies": {
+    "browserify": "^13.1.0",
+    "uglify": "^0.1.5"
+  }
+}

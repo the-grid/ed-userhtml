@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>demo ed-userhtml</title>
+</head>
+<body>
+  <h1>ed-userhtml demo</h1>
+  <h2>edit</h2>
+  <iframe id="edit" src="./edit.html" style="width: 100%; height: 360px;"></iframe>
+  <h2>view</h2>
+  <iframe id="index" src="./index.html" style="width: 100%; height: 360px;"></iframe>
+  <h2>block</h2>
+  <pre id="block"></pre>
+  <button id="focus">focus</button>
+
+  <script>
+    var edit = document.getElementById('edit')
+    // Sending content to the editor
+    edit.addEventListener('load', function () {
+      edit.contentWindow.postMessage(
+        { topic: 'setblock'
+        , payload:
+          { type: 'interactive'
+          , html: ''
+          , metadata:
+            { widget: 'userhtml'
+            , text: '<h1>Hello</h1>\n<p>world</p>'
+            }
+          , id: 'uuid-user-html'
+          }
+        }
+      , '*'
+      )
+    })
+    // Receiving content from the editor
+    window.addEventListener('message', function (message) {
+      var iframe = document.getElementById('demo')
+      var view = document.getElementById('view')
+      var preview = document.getElementById('preview')
+      var blocktext = document.getElementById('blocktext')
+      switch (message.data.topic) {
+        case 'changed':
+          var block = message.data.payload
+          if (block && block.metadata && block.metadata.isBasedOnUrl) {
+            var search = block.metadata.isBasedOnUrl.split('?')[1]
+            view.src = './index.html?' + search
+          }
+          blocktext.textContent = JSON.stringify(message.data.payload, null, 2)
+          break
+        case 'height':
+          edit.height = message.data.payload
+        default:
+          break
+      }
+    })
+
+    // Focus demo
+    document.getElementById('focus').onclick = function () {
+      edit.contentWindow.postMessage({topic: 'focus'}, '*')
+    }
+  </script>
+  
+  </body>
+</html>
