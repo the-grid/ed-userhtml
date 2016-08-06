@@ -41,7 +41,9 @@ function fromEdit (event) {
   var b64 = b64ify(text)
 
   cachedBlock.metadata.text = text
-  cachedBlock.html = RUNNER + b64
+  var url = RUNNER + b64
+  cachedBlock.metadata.isBasedOnUrl = url
+  cachedBlock.html = '<iframe src="'+url+'"></iframe>'
 
   send('changed', cachedBlock)
   resize()
@@ -51,8 +53,8 @@ textarea.addEventListener('input', fromEdit)
 function resize () {
   textarea.style.height = 'auto'
   var height = textarea.scrollHeight
+  // Padding is 2px, so minus 4
   textarea.style.height = (height - 4) + 'px'
-  console.log(height, cachedHeight)
   if (height !== cachedHeight) {
     cachedHeight = height
     send('height', height)

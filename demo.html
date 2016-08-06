@@ -10,7 +10,7 @@
   <iframe id="edit" src="./edit.html" style="width: 100%; height: 360px;"></iframe>
   <button id="focus">test focus</button>
   <h2>view</h2>
-  <iframe id="index" src="./index.html" style="width: 100%; height: 360px;"></iframe>
+  <iframe id="view" src="./index.html?g=eJxtjUEOwiAURPc9BWHTNjFQ3ZhYytprEIqF5MMnH0w9hJ7BK3oEa3RpMovJTOaN8nt9dgCo5OYalfWKBDN7Pe8PJfOWFEshV20xFQQnVkOpay-EkX0bVs2yY8XjdZtZU61njghJCNH2I9sPQ9ePSv4wjQpxYZgAzTzxP9CQICTX9pwVshP3teaTlIDkYg43B8JilMfDR9tZ4foNdU1ByA" style="width: 100%; height: 360px;"></iframe>
   <h2>block</h2>
   <pre id="block"></pre>
 
@@ -24,7 +24,10 @@
       , html: ''
       , metadata:
         { widget: 'userhtml'
-        , text: '<h1>Hello</h1>\n<p>world</p>'
+        , text: '<h1>Hello</h1>\n'+
+          '<p>world 🌍</p>\n'+
+          '<script>console.warn(\'from script tag, should catch error...\'); 100();<\/script>\n'+
+          '<img onload="console.warn(\'from inline\')" src="http://lorempixel.com/72/72/cats">'
         }
       , id: 'uuid-user-html'
       }
