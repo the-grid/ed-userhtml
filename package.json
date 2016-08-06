@@ -6,8 +6,9 @@
   "scripts": {
     "test": "echo 'todo'",
     "build": "mkdir -p dist && npm run buildindex && npm run buildedit",
+    "buildedit": "browserify ./src/edit.js | uglifyjs -cm > ./dist/edit.js",
     "buildindex": "browserify ./src/index.js | uglifyjs -cm > ./dist/index.js",
-    "buildedit": "browserify ./src/edit.js | uglifyjs -cm > ./dist/edit.js"
+    "devedit": "budo src/edit.js:dist/edit.js --live"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
   },
   "devDependencies": {
     "browserify": "^13.1.0",
+    "budo": "8.3.0",
     "uglify": "^0.1.5"
   }
 }
