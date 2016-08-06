@@ -7,9 +7,17 @@ Runner: index.html and src/index.js -- unzips html from url and mounts arbitrary
 
 ## dev
 
+Uses `budo`. Can only livereload one part at a time:
+    
+    rm dist/edit.js
+    npm run buildindex
+
     npm run devedit
 
 or
+
+    rm dist/index.js
+    npm run buildedit
 
     npm run devindex
 
