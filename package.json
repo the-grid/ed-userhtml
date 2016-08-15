@@ -1,6 +1,6 @@
 {
   "name": "@the-grid/ed-userhtml",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "Ed widget for user html",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,9 @@
     "buildedit": "browserify ./src/edit.js | uglifyjs -cm > ./dist/edit.js",
     "buildindex": "browserify ./src/index.js | uglifyjs -cm > ./dist/index.js",
     "devedit": "budo src/edit.js:dist/edit.js --live",
-    "devindex": "budo src/index.js:dist/index.js --live"
+    "devindex": "budo src/index.js:dist/index.js --live",
+    "preversion": "npm run build",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
