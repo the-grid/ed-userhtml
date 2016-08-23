@@ -10,7 +10,7 @@
     "buildindex": "browserify ./src/index.js | uglifyjs -cm > ./dist/index.js",
     "devedit": "budo src/edit.js:dist/edit.js --live",
     "devindex": "budo src/index.js:dist/index.js --live",
-    "preversion": "npm run build",
+    "preversion": "npm test",
     "postversion": "git push && git push --tags"
   },
   "repository": {
