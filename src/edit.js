@@ -1,5 +1,6 @@
 var deflate = require('pako/lib/deflate').deflate
 var encode = require('urlsafe-base64').encode
+
 var RUNNER = 'https://the-grid.github.io/ed-userhtml/?g='
 var MAX_URL_LENGTH = 2000
 
@@ -40,9 +41,14 @@ function send (topic, payload) {
 }
 
 function toEdit (block) {
+  if (!block) return
+  if (!block.metadata) {
+    block.metadata = {}
+  }
+  block.metadata.widget = 'userhtml'
   cachedBlock = block
-  if (block && block.hasOwnProperty('metadata') && block.metadata.hasOwnProperty('text')) {
-    textarea.value = block.metadata.text
+  if (block.hasOwnProperty('text')) {
+    textarea.value = block.text
   }
   resize()
 }
@@ -55,7 +61,7 @@ function fromEdit (event) {
   var text = event.target.value
   var b64 = b64ify(text)
 
-  cachedBlock.metadata.text = text
+  cachedBlock.text = text
   var url = RUNNER + b64
   if (url.length > MAX_URL_LENGTH) {
     showStatus('error: input too long')
