@@ -22,15 +22,18 @@
     var demoblock =
       { type: 'interactive'
       , html: ''
+      , text: '<h1>Hello</h1>\n'+
+        '<p>world 🌍</p>\n'+
+        '<script>console.warn(\'from script tag, should catch error...\'); 100();<\/script>\n'+
+        '<img onload="console.warn(\'from inline\')" src="http://lorempixel.com/72/72/cats">'
       , metadata:
         { widget: 'userhtml'
-        , text: '<h1>Hello</h1>\n'+
-          '<p>world 🌍</p>\n'+
-          '<script>console.warn(\'from script tag, should catch error...\'); 100();<\/script>\n'+
-          '<img onload="console.warn(\'from inline\')" src="http://lorempixel.com/72/72/cats">'
         }
       , id: 'uuid-user-html'
       }
+
+    // Show demo block
+    blocktext.textContent = JSON.stringify(demoblock, null, 2)
 
     // Sending content to the editor
     edit.addEventListener('load', function () {
