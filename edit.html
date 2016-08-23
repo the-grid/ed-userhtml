@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>demo ed-userhtml</title>
+  <style type="text/css">
+    body {
+      padding: 0;
+      margin: 0;
+    }
+    #textarea {
+      font-family: monospace;
+      box-sizing: border-box;
+      border: none;
+      outline: none;
+      padding: 2px;
+      width: 100%;
+      resize: none;
+      min-height: 72px;
+      max-height: 720px;
+      overflow-x: hidden;
+      word-wrap: break-word;
+    }
+    #status {
+      display: inline-block;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+  </style>
+</head>
+<body>
+  <textarea id="textarea"></textarea>
+  <div id="status"></div>
+  <script src="./dist/edit.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>demo ed-userhtml</title>
+</head>
+<body>
+  <h1>ed-userhtml demo</h1>
+  <h2>edit</h2>
+  <iframe id="edit" src="./edit.html" style="width: 100%; height: 360px;"></iframe>
+  <button id="focus">test focus</button>
+  <h2>view</h2>
+  <iframe id="view" src="./index.html?g=eJxtjUEOwiAURPc9BWHTNjFQ3ZhYytprEIqF5MMnH0w9hJ7BK3oEa3RpMovJTOaN8nt9dgCo5OYalfWKBDN7Pe8PJfOWFEshV20xFQQnVkOpay-EkX0bVs2yY8XjdZtZU61njghJCNH2I9sPQ9ePSv4wjQpxYZgAzTzxP9CQICTX9pwVshP3teaTlIDkYg43B8JilMfDR9tZ4foNdU1ByA" style="width: 100%; height: 360px;"></iframe>
+  <h2>block</h2>
+  <pre id="block" style="max-width:100%; overflow-x: auto;"></pre>
+
+  <script>
+    var edit = document.getElementById('edit')
+    var view = document.getElementById('view')
+    var blocktext = document.getElementById('block')
+
+    var demoblock =
+      { type: 'interactive'
+      , html: ''
+      , text: '<h1>Hello</h1>\n'+
+        '<p>world 🌍</p>\n'+
+        '<script>console.warn(\'from script tag, should catch error...\'); 100();<\/script>\n'+
+        '<img onload="console.warn(\'from inline\')" src="http://lorempixel.com/72/72/cats">'
+      , metadata:
+        { widget: 'userhtml'
+        }
+      , id: 'uuid-user-html'
+      }
+
+    // Show demo block
+    blocktext.textContent = JSON.stringify(demoblock, null, 2)
+
+    // Sending content to the editor
+    edit.addEventListener('load', function () {
+      edit.contentWindow.postMessage(
+        { topic: 'setblock'
+        , payload: demoblock
+        }
+      , '*'
+      )
+    })
+    // Receiving content from the editor
+    window.addEventListener('message', function (message) {
+      switch (message.data.topic) {
+        case 'changed':
+          var block = message.data.payload
+          if (block && block.metadata && block.metadata.isBasedOnUrl) {
+            var search = block.metadata.isBasedOnUrl.split('?')[1]
+            view.src = './index.html?' + search
+          }
+          blocktext.textContent = JSON.stringify(message.data.payload, null, 2)
+          break
+        case 'height':
+          edit.style.height = message.data.payload + 'px'
+        default:
+          break
+      }
+    })
+
+    // Focus demo
+    document.getElementById('focus').onclick = function () {
+      edit.contentWindow.postMessage({topic: 'focus'}, '*')
+    }
+  </script>
+  
+  </body>
+</html>
