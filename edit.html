@@ -21,17 +21,30 @@
       overflow-x: hidden;
       word-wrap: break-word;
     }
+    #meta {
+      background-color: #eee;
+      padding: 2px;
+    }
+    #height {
+      width: 4em;
+    }
     #status {
-      display: inline-block;
-      position: absolute;
-      bottom: 0;
-      right: 0;
+      padding-left: 0.5em;
     }
   </style>
 </head>
 <body>
   <textarea id="textarea"></textarea>
-  <div id="status"></div>
+  <div id="meta">
+    <label>
+      height
+      <input id="height" type="number" min="0" max="5000" step="1"></input>
+    </label>
+    <span id="status">
+      <a href="" target="_blank" rel="noreferrer noopener">Help note</a>:
+      try sharing the media url directly before using this.
+    </span>
+  </div>
   <script src="./dist/edit.js"></script>
 </body>
 </html>
