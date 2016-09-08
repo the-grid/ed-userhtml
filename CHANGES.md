@@ -1,3 +1,7 @@
+## 0.2.1, 2016-09-08
+
+* Default height
+
 ## 0.2.0, 2016-08-23
 
 * Read and write both `block.metadata.text` and `block.text`
