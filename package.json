@@ -1,6 +1,6 @@
 {
   "name": "@the-grid/ed-userhtml",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Ed widget for user html",
   "main": "index.js",
   "scripts": {
