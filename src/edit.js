@@ -10,7 +10,6 @@ var status = document.getElementById('status')
 var heightInput = document.getElementById('height')
 var cachedHeight = 0
 var hideStatusTimeout = null
-var height = 240
 
 function showStatus (text) {
   if (hideStatusTimeout) {
