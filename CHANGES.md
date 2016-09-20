@@ -1,3 +1,10 @@
+## 0.3.0
+
+Runner only release
+
+* Minimal reset style: no padding, system sans fonts
+* Load and run scripts in order
+
 ## 0.2.1, 2016-09-08
 
 * Default height
