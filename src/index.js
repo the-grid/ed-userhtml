@@ -3,24 +3,39 @@ var decode = require('urlsafe-base64').decode
 
 var userhtml = document.getElementById('userhtml')
 
+// Load all external before evaluating inline
+var loadingScripts = []
+var inlineScripts = []
+var loadedCount = 0
+
 function unb64ify (b64) {
   var ascii = decode(b64)
   var text = inflate(ascii, {to: 'string'})
   return text
 }
 
-function evil (script) {
-  if (script.textContent) {
-    try {
-      window.eval(script.textContent)
-    } catch (error) {
-      console.warn('UserHTML error!', error)
-    }
-    return
+function evalInline (script) {
+  try {
+    window.eval(script)
+  } catch (error) {
+    console.warn('UserHTML error!', error, script)
   }
-  if (script.src) {
-    // TODO
+}
+
+function onload (event) {
+  loadedCount++
+  if (loadedCount === loadingScripts.length) {
+    inlineScripts.forEach(evalInline)
   }
+}
+
+function loadExternal (src) {
+   var head = document.querySelector('head')
+   var script = document.createElement('script')
+   script.type = 'text/javascript'
+   script.onload = onload
+   script.src = src
+   head.appendChild(script)
 }
 
 function setHtml (html) {
@@ -28,7 +43,18 @@ function setHtml (html) {
   var scripts = userhtml.querySelectorAll('script')
   for (var i = 0, len = scripts.length; i < len; i++) {
     var script = scripts[i]
-    evil(script)
+    if (script.src) {
+      loadingScripts.push(script.src)
+    }
+    else if (script.textContent) {
+      inlineScripts.push(script.textContent)
+    }
+  }
+  if (loadingScripts.length > 0) {
+    loadingScripts.forEach(loadExternal)
+  }
+  else if (loadingScripts.length === 0) {
+    inlineScripts.forEach(evalInline)
   }
 }
 
