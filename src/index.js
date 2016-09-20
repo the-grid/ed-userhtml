@@ -23,10 +23,15 @@ function evalInline (script) {
 }
 
 function onload (event) {
+  // Not as cool as await but hey
   loadedCount++
   if (loadedCount === loadingScripts.length) {
     inlineScripts.forEach(evalInline)
   }
+}
+
+function onerror (error) {
+  console.warn('UserHTML external script error!', error)
 }
 
 function loadExternal (src) {
@@ -34,6 +39,7 @@ function loadExternal (src) {
    var script = document.createElement('script')
    script.type = 'text/javascript'
    script.onload = onload
+   script.onerror = onerror
    script.src = src
    head.appendChild(script)
 }
